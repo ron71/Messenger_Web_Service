@@ -16,6 +16,7 @@ import com.infinitybehind.models.Message;
 import com.infinitybehind.models.Profile;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -27,6 +28,32 @@ public class MessageService {
         messages.put(1L,new Message(1L, "Where are you?", "captain"));
         messages.put(2L, new Message(2L, "Fuck you!", "captain"));
 
+    }
+
+    public List<Message> getAllMessageForYear(int year){
+
+       /*
+       * returns list of messages of given year
+       * */
+        List<Message> messagesForYear = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        for(Message message : messages.values()){
+            cal.setTime(message.getCreated());
+            if(cal.get(Calendar.YEAR)==year){
+                messagesForYear.add(message);
+            }
+        }
+        return messagesForYear;
+    }
+
+    public List<Message> getAllMeassagesPaginated(int start, int size){
+
+        /*
+        * returns list of messages from given index to specified size.
+        * */
+        List<Message> messagesPaginated = new ArrayList<>(messages.values());
+
+        return messagesPaginated.subList(start, start+size);
     }
 
 

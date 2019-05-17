@@ -1,5 +1,5 @@
 /*
- * This project and its content is copyright of ROHAN KUMAR - © cozinfinitybehind [2019r]. All rights reserved.
+ * This project and its content is copyright of ROHAN KUMAR - © cozinfinitybehind [2019]. All rights reserved.
  *
  * Any redistribution or reproduction of part or all of the contents in any form is prohibited other than the following:
  *
@@ -27,7 +27,14 @@ public class MessageResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Message> getMessages(){
+    public List<Message> getMessages(@QueryParam("year") int year, @QueryParam("start") int start, @QueryParam("size") int size){
+
+        if(year>0){
+            return service.getAllMessageForYear(year);
+        }
+        if(start>=0 && size>=0){
+            return service.getAllMeassagesPaginated(start, size);
+        }
         return service.getAllMessages();
     }
 
@@ -62,8 +69,5 @@ public class MessageResource {
     public Message deleteMessage(@PathParam("messageId") long id){
         return  service.removeMessage(id);
     }
-
-
-
 
 }
